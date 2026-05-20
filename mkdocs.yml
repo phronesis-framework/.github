@@ -1,0 +1,78 @@
+site_name: Phronesis Framework — Conventions
+site_description: Engineering conventions and agent workflows for the phronesis-framework org.
+site_url: https://phronesis-framework.github.io/.github/
+repo_name: phronesis-framework/.github
+repo_url: https://github.com/phronesis-framework/.github
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      accent: deep orange
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: deep orange
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+plugins:
+  - search
+
+extra_css:
+  - stylesheets/extra.css
+
+nav:
+  - Home: index.md
+  - Concepts:
+      - What is Phronesis: concepts/phronesis.md
+  - Conventions:
+      - Python: conventions/python.md
+      - Commits: conventions/commits.md
+      - Testing: conventions/testing.md
+      - Documentation: conventions/docs.md
+      - CI/CD: conventions/ci.md
+      - Agents: conventions/agents.md
+  - Guides:
+      - Bootstrapping a new repo: guides/new-repo.md
+      - Working with Claude Code: guides/working-with-claude.md

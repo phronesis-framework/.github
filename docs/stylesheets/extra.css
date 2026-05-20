@@ -1,0 +1,14 @@
+/* Phronesis Framework docs — minor visual overrides. */
+
+.md-typeset blockquote {
+  border-left: 3px solid var(--md-accent-fg-color);
+}
+
+.md-typeset code {
+  border-radius: 3px;
+}
+
+/* Make the philosophical framing blockquote on the index page stand out. */
+.md-typeset .grid.cards > :first-child > blockquote {
+  font-style: italic;
+}
