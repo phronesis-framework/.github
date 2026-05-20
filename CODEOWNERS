@@ -1,0 +1,28 @@
+# CODEOWNERS for the phronesis-framework org-level .github repository.
+#
+# Path patterns are evaluated in order; the LAST matching pattern wins.
+# Downstream repos in the org that do not define their own CODEOWNERS will
+# inherit nothing from this file — CODEOWNERS in the org .github repo applies
+# only to this repo itself. Copy + tailor per repo as needed.
+
+# Default owner for everything in this repo
+*                                   @phronesis-framework/maintainers
+
+# Workflows and CI — also owned by infra maintainers
+/.github/workflows/                 @phronesis-framework/maintainers @phronesis-framework/infra
+/.github/dependabot.yml             @phronesis-framework/maintainers @phronesis-framework/infra
+/.github/labeler.yml                @phronesis-framework/maintainers @phronesis-framework/infra
+/.github/release.yml                @phronesis-framework/maintainers @phronesis-framework/infra
+
+# Governance — restricted
+/CODEOWNERS                         @phronesis-framework/maintainers
+/LICENSE                            @phronesis-framework/maintainers
+/SECURITY.md                        @phronesis-framework/maintainers
+/CODE_OF_CONDUCT.md                 @phronesis-framework/maintainers
+/CONTRIBUTING.md                    @phronesis-framework/maintainers
+
+# Conventions docs — change with care; require maintainers
+/docs/conventions/                  @phronesis-framework/maintainers
+
+# Agent toolkit — convention bound
+/.claude/                           @phronesis-framework/maintainers

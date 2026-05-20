@@ -1,0 +1,84 @@
+name: Bug report
+description: Report unexpected behavior in a phronesis-framework repository.
+title: "bug: <short description>"
+labels: ["type:bug", "status:triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug.
+
+        Before submitting:
+
+        - Search existing issues (open and closed).
+        - Reproduce on the latest released version when possible.
+        - **Security reports**: see [SECURITY.md](https://github.com/phronesis-framework/.github/blob/main/SECURITY.md). Do not file them here.
+
+  - type: input
+    id: repo
+    attributes:
+      label: Affected repository
+      description: Which repo? (e.g. `phronesis-framework`, `phronesis-web`)
+      placeholder: phronesis-framework
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version / commit
+      description: Package version, git tag, or commit SHA.
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the actual behavior. Include exact error messages.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: Steps to reproduce, or a minimal code snippet.
+      render: bash
+    validations:
+      required: true
+
+  - type: textarea
+    id: env
+    attributes:
+      label: Environment
+      description: |
+        Output of: `python --version && uv --version && uname -a` (or equivalent).
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / traceback
+      render: text
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmations
+      options:
+        - label: I searched existing issues and did not find a duplicate.
+          required: true
+        - label: This is not a security report.
+          required: true

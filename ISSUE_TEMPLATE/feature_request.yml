@@ -1,0 +1,61 @@
+name: Feature request
+description: Propose a new capability or improvement.
+title: "feat: <short description>"
+labels: ["type:feature", "status:triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for proposing a feature. Before submitting, search existing issues and the project roadmap.
+
+  - type: input
+    id: repo
+    attributes:
+      label: Target repository
+      placeholder: phronesis-framework
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What problem are you trying to solve? Describe the user pain, not the implementation.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: |
+        How should it work from the user's perspective? Include API sketches if relevant.
+        Reference the [design principles](https://github.com/phronesis-framework/.github/blob/main/docs/concepts/phronesis.md#design-principles-non-negotiable).
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What did you consider and reject?
+    validations:
+      required: false
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Backwards compatibility
+      description: Does this break existing behavior? If yes, sketch the migration.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmations
+      options:
+        - label: I searched existing issues and did not find a duplicate.
+          required: true
+        - label: I've read the design principles.
+          required: true
