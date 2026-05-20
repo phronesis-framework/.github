@@ -1,0 +1,143 @@
+# Reusable release workflow.
+#
+# Trigger contract (in the caller):
+#   on:
+#     push:
+#       tags: ["v*.*.*"]
+#
+# Steps:
+#   1. Verify the tag matches the package version (src/<pkg>/_version.py).
+#   2. Build wheel + sdist with uv build.
+#   3. Publish to PyPI via OIDC trusted publishing (no API tokens).
+#   4. Sign artifacts with sigstore.
+#   5. Create a GitHub Release with notes from .github/release.yml config.
+#
+# TODO(pin-by-sha): replace tag pins below with commit-SHA pins.
+
+name: release
+
+on:
+  workflow_call:
+    inputs:
+      package-import-name:
+        description: "Python import name (e.g. 'phronesis'). Used to locate _version.py."
+        type: string
+        required: true
+      pypi-environment:
+        description: "GitHub environment bound to PyPI OIDC."
+        type: string
+        required: false
+        default: "pypi-production"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: verify-tag
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      version: ${{ steps.read.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4  # TODO(pin-by-sha)
+      - name: Read package version
+        id: read
+        run: |
+          set -euo pipefail
+          version=$(python -c "
+          import re, pathlib
+          p = pathlib.Path('src/${{ inputs.package-import-name }}/_version.py').read_text()
+          m = re.search(r'__version__\s*=\s*[\"\']([^\"\']+)', p)
+          assert m, '__version__ not found'
+          print(m.group(1))
+          ")
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - name: Verify tag matches version
+        run: |
+          set -euo pipefail
+          tag="${GITHUB_REF##refs/tags/v}"
+          version="${{ steps.read.outputs.version }}"
+          if [ "$tag" != "$version" ]; then
+            echo "Tag v$tag does not match package version $version" >&2
+            exit 1
+          fi
+
+  build:
+    name: build (wheel + sdist)
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4  # TODO(pin-by-sha)
+      - uses: astral-sh/setup-uv@v3  # TODO(pin-by-sha)
+        with:
+          enable-cache: true
+      - uses: actions/setup-python@v5  # TODO(pin-by-sha)
+        with:
+          python-version: "3.12"
+      - name: Build
+        run: uv build
+      - uses: actions/upload-artifact@v4  # TODO(pin-by-sha)
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    name: publish (PyPI via OIDC)
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.pypi-environment }}
+      url: https://pypi.org/project/${{ inputs.package-import-name }}/${{ needs.verify.outputs.version }}/
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/download-artifact@v4  # TODO(pin-by-sha)
+        with:
+          name: dist
+          path: dist/
+      - name: Publish via OIDC
+        uses: pypa/gh-action-pypi-publish@release/v1  # TODO(pin-by-sha)
+
+  sign:
+    name: sign (sigstore)
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/download-artifact@v4  # TODO(pin-by-sha)
+        with:
+          name: dist
+          path: dist/
+      - name: Sign with sigstore
+        uses: sigstore/gh-action-sigstore-python@v3.0.0  # TODO(pin-by-sha)
+        with:
+          inputs: ./dist/*.tar.gz ./dist/*.whl
+      - uses: actions/upload-artifact@v4  # TODO(pin-by-sha)
+        with:
+          name: dist-signed
+          path: dist/
+
+  release:
+    name: github-release
+    needs: [verify, publish, sign]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4  # TODO(pin-by-sha)
+      - uses: actions/download-artifact@v4  # TODO(pin-by-sha)
+        with:
+          name: dist-signed
+          path: dist/
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2  # TODO(pin-by-sha)
+        with:
+          generate_release_notes: true
+          files: dist/*

@@ -1,0 +1,36 @@
+# Reusable workflow: block PRs introducing vulnerable or improperly-licensed deps.
+#
+# TODO(pin-by-sha): replace tag pins below with commit-SHA pins.
+
+name: dependency-review
+
+on:
+  workflow_call:
+    inputs:
+      fail-on-severity:
+        type: string
+        required: false
+        default: "moderate"
+      allow-licenses:
+        description: "SPDX expression of allowed licenses."
+        type: string
+        required: false
+        default: "Apache-2.0, MIT, BSD-2-Clause, BSD-3-Clause, ISC, MPL-2.0, Python-2.0"
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    name: review
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4  # TODO(pin-by-sha)
+      - uses: actions/dependency-review-action@v4  # TODO(pin-by-sha)
+        with:
+          fail-on-severity: ${{ inputs.fail-on-severity }}
+          allow-licenses: ${{ inputs.allow-licenses }}
+          comment-summary-in-pr: always

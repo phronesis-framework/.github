@@ -1,0 +1,33 @@
+# Reusable workflow: auto-label PRs based on changed paths.
+# Configuration lives in the caller repo at .github/labeler.yml (or this repo's
+# default; see ../labeler.yml).
+#
+# Uses pull_request_target so it can label PRs from forks.
+#
+# TODO(pin-by-sha): replace tag pins below with commit-SHA pins.
+
+name: labeler
+
+on:
+  workflow_call:
+    inputs:
+      configuration-path:
+        type: string
+        required: false
+        default: ".github/labeler.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  label:
+    name: label
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/labeler@v5  # TODO(pin-by-sha)
+        with:
+          configuration-path: ${{ inputs.configuration-path }}
+          sync-labels: true

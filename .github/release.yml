@@ -1,0 +1,33 @@
+# GitHub Releases auto-generated notes configuration.
+# Consumed by `gh release create` / softprops/action-gh-release.
+
+changelog:
+  exclude:
+    labels:
+      - "type:duplicate"
+      - "type:invalid"
+      - "type:wontfix"
+    authors:
+      - dependabot
+  categories:
+    - title: "Breaking changes"
+      labels:
+        - "type:breaking"
+    - title: "Features"
+      labels:
+        - "type:feature"
+        - "area:core"
+        - "area:runtime"
+    - title: "Fixes"
+      labels:
+        - "type:bug"
+    - title: "Documentation"
+      labels:
+        - "area:docs"
+    - title: "CI / Build"
+      labels:
+        - "area:ci"
+        - "area:deps"
+    - title: "Other changes"
+      labels:
+        - "*"

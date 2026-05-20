@@ -1,0 +1,61 @@
+# Reusable docs workflow: build mkdocs site; deploy to GitHub Pages on main.
+#
+# TODO(pin-by-sha): replace tag pins below with commit-SHA pins.
+
+name: docs
+
+on:
+  workflow_call:
+    inputs:
+      deploy:
+        description: "Deploy to GitHub Pages (true when called from main)."
+        type: boolean
+        required: false
+        default: false
+      extras:
+        type: string
+        required: false
+        default: "docs"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: build (mkdocs --strict)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4  # TODO(pin-by-sha)
+      - uses: astral-sh/setup-uv@v3  # TODO(pin-by-sha)
+        with:
+          enable-cache: true
+      - uses: actions/setup-python@v5  # TODO(pin-by-sha)
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: uv sync --extra ${{ inputs.extras }}
+      - name: Build
+        run: uv run mkdocs build --strict
+      - name: Upload Pages artifact
+        if: ${{ inputs.deploy }}
+        uses: actions/upload-pages-artifact@v3  # TODO(pin-by-sha)
+        with:
+          path: site
+
+  deploy:
+    name: deploy (github-pages)
+    if: ${{ inputs.deploy }}
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4  # TODO(pin-by-sha)

@@ -1,0 +1,53 @@
+# Path-based PR labels. Consumed by .github/workflows/labeler.yml.
+# Downstream repos may override by adding their own .github/labeler.yml.
+
+"area:ci":
+  - changed-files:
+    - any-glob-to-any-file:
+      - ".github/workflows/**"
+      - ".github/labeler.yml"
+      - ".github/dependabot.yml"
+      - ".pre-commit-config.yaml"
+
+"area:docs":
+  - changed-files:
+    - any-glob-to-any-file:
+      - "docs/**"
+      - "mkdocs.yml"
+      - "**/*.md"
+
+"area:tests":
+  - changed-files:
+    - any-glob-to-any-file:
+      - "tests/**"
+
+"area:agents":
+  - changed-files:
+    - any-glob-to-any-file:
+      - ".claude/**"
+      - "docs/conventions/agents.md"
+      - "docs/guides/working-with-claude.md"
+
+"area:deps":
+  - changed-files:
+    - any-glob-to-any-file:
+      - "pyproject.toml"
+      - "uv.lock"
+      - "requirements*.txt"
+
+"area:governance":
+  - changed-files:
+    - any-glob-to-any-file:
+      - "CODEOWNERS"
+      - "CONTRIBUTING.md"
+      - "CODE_OF_CONDUCT.md"
+      - "SECURITY.md"
+      - "SUPPORT.md"
+      - "LICENSE"
+      - "PULL_REQUEST_TEMPLATE.md"
+      - ".github/ISSUE_TEMPLATE/**"
+
+"type:breaking":
+  - head-branch:
+    - "^.*!/.*$"
+    - "^breaking/.*$"

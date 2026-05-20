@@ -1,0 +1,107 @@
+# Reusable CI workflow for Python projects in the phronesis-framework org.
+#
+# Lint (ruff), format check (ruff), type check (pyright), test (pytest + coverage)
+# across a Python version matrix.
+#
+# TODO(pin-by-sha): replace tag pins below with commit-SHA pins + trailing
+# version comments. Tracked in docs/conventions/agents.md.
+
+name: ci-python
+
+on:
+  workflow_call:
+    inputs:
+      python-versions:
+        description: 'JSON array of Python versions to test, e.g. ''["3.11","3.12","3.13"]''.'
+        type: string
+        required: false
+        default: '["3.11", "3.12", "3.13"]'
+      runs-on:
+        description: "Runner image."
+        type: string
+        required: false
+        default: "ubuntu-latest"
+      coverage-upload:
+        description: "Upload coverage to Codecov."
+        type: boolean
+        required: false
+        default: true
+      extras:
+        description: "Extras to install via uv sync (e.g. 'all', 'dev').".
+        type: string
+        required: false
+        default: "all"
+    secrets:
+      CODECOV_TOKEN:
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: lint (ruff)
+    runs-on: ${{ inputs.runs-on }}
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4  # TODO(pin-by-sha)
+      - uses: astral-sh/setup-uv@v3  # TODO(pin-by-sha)
+        with:
+          enable-cache: true
+      - uses: actions/setup-python@v5  # TODO(pin-by-sha)
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: uv sync --extra ${{ inputs.extras }}
+      - name: ruff check
+        run: uv run ruff check --output-format=github .
+      - name: ruff format --check
+        run: uv run ruff format --check .
+
+  type-check:
+    name: type-check (pyright)
+    runs-on: ${{ inputs.runs-on }}
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4  # TODO(pin-by-sha)
+      - uses: astral-sh/setup-uv@v3  # TODO(pin-by-sha)
+        with:
+          enable-cache: true
+      - uses: actions/setup-python@v5  # TODO(pin-by-sha)
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: uv sync --extra ${{ inputs.extras }}
+      - name: pyright
+        run: uv run pyright
+
+  test:
+    name: test (py${{ matrix.python-version }})
+    runs-on: ${{ inputs.runs-on }}
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ${{ fromJSON(inputs.python-versions) }}
+    steps:
+      - uses: actions/checkout@v4  # TODO(pin-by-sha)
+      - uses: astral-sh/setup-uv@v3  # TODO(pin-by-sha)
+        with:
+          enable-cache: true
+      - uses: actions/setup-python@v5  # TODO(pin-by-sha)
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install
+        run: uv sync --extra ${{ inputs.extras }}
+      - name: Run tests
+        run: uv run pytest --cov --cov-report=xml --cov-report=term-missing
+      - name: Upload coverage to Codecov
+        if: ${{ inputs.coverage-upload && matrix.python-version == '3.12' }}
+        uses: codecov/codecov-action@v4  # TODO(pin-by-sha)
+        with:
+          files: coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
