@@ -1,14 +1,14 @@
 # Phronesis Framework
 
-> *Phronesis* (φρόνησις): for Aristotle, **practical wisdom** — the capacity to deliberate well and act with judgment in concrete situations. An LLM has *episteme* (knowledge). An agent needs *phronesis*.
+> *Phronesis* (φρόνησις): for Aristotle, **practical wisdom** - the capacity to deliberate well and act with judgment in concrete situations. An LLM has *episteme* (knowledge). An agent needs *phronesis*.
 
-We build Python-first infrastructure for AI agent systems with practical wisdom at their core: composable specifications, async-first runtimes, strongly-typed contracts, and observability built in — not bolted on.
+We build Python-first infrastructure for AI agent systems with practical wisdom at their core: composable specifications, async-first runtimes, strongly-typed contracts, and observability built in - not bolted on.
 
 ## Projects
 
-- **[phronesis-framework](https://github.com/phronesis-framework/phronesis-framework)** — the core agent framework (alpha).
-- **[phronesis-web](https://github.com/phronesis-framework/phronesis-web)** — the project website.
-- **[.github](https://github.com/phronesis-framework/.github)** — shared CI/CD, conventions, and agent tooling for the org.
+- **[phronesis-framework](https://github.com/phronesis-framework/phronesis-framework)** - the core agent framework (alpha).
+- **[phronesis-web](https://github.com/phronesis-framework/phronesis-web)** - the project website.
+- **[.github](https://github.com/phronesis-framework/.github)** - shared CI/CD, conventions, and agent tooling for the org.
 
 ## Design principles
 
