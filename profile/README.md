@@ -6,7 +6,7 @@ We build Python-first infrastructure for AI agent systems with practical wisdom 
 
 ## Projects
 
-- **[phronesis-framework](https://github.com/phronesis-framework/phronesis-framework)** - the core agent framework (alpha).
+- **[phronesis-framework](https://github.com/phronesis-framework/phronesis-framework)** - the core agent framework.
 - **[phronesis-web](https://github.com/phronesis-framework/phronesis-web)** - the project website.
 - **[.github](https://github.com/phronesis-framework/.github)** - shared CI/CD, conventions, and agent tooling for the org.
 
