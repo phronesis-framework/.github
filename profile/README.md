@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./assets/lockup-horizontal-dark.png" alt="Phronesis Framework" width="100%" />
+  <img src="assets/lockup-horizontal-dark.png" alt="Phronesis Framework" width="100%" />
 </div>
 
 <div align="center">
@@ -13,14 +13,14 @@
 </div>
 
 <div align="center">
-  <a href="https://github.com/phronesis-framework/phronesis-framework">framework</a> · <a href="https://github.com/phronesis-framework/phronesis-web">website</a>
+  <a href="assets/">assets</a>
 </div>
 
 <br />
 
 <div align="center">
   <a href="https://go-skill-icons.vercel.app/">
-    <img src="https://go-skill-icons.vercel.app/api/icons?i=python,typescript,react,nextjs,git&titles=true" alt="Python, TypeScript, React, Next.js, and Git" />
+    <img src="https://go-skill-icons.vercel.app/api/icons?i=python,typescript,react,nextjs,git&titles=true" alt="Technology stack" />
   </a>
 </div>
 
