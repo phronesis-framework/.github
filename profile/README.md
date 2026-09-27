@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./assets/lockup-horizontal.png" alt="Phronesis Framework" width="480" />
+  <img src="./assets/lockup-horizontal-dark.png" alt="Phronesis Framework" width="480" />
 </div>
 
 <div align="center">
