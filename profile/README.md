@@ -1,28 +1,53 @@
+<div align="center">
+  <img src="./assets/lockup-horizontal.png" alt="Phronesis Framework" width="480" />
+</div>
+
+<div align="center">
+
 # Phronesis Framework
 
-> *Phronesis* (φρόνησις): for Aristotle, **practical wisdom** - the capacity to deliberate well and act with judgment in concrete situations. An LLM has *episteme* (knowledge). An agent needs *phronesis*.
+</div>
 
-We build Python-first infrastructure for AI agent systems with practical wisdom at their core: composable specifications, async-first runtimes, strongly-typed contracts, and observability built in - not bolted on.
+<div align="center">
+  Practical wisdom for AI agent systems.
+</div>
 
-## Projects
+<div align="center">
+  <a href="https://github.com/phronesis-framework/phronesis-framework">framework</a> · <a href="https://github.com/phronesis-framework/phronesis-web">website</a>
+</div>
+
+<br />
+
+<div align="center">
+  <a href="https://go-skill-icons.vercel.app/">
+    <img src="https://go-skill-icons.vercel.app/api/icons?i=python,typescript,react,nextjs,git&titles=true" alt="Python, TypeScript, React, Next.js, and Git" />
+  </a>
+</div>
+
+---
+
+<div align="center">
+
+## 🎯 Purpose
+
+</div>
+
+We build Python-first infrastructure for AI agent systems, with composable specifications, asynchronous execution, typed contracts, and built-in observability.
+
+<div align="center">
+
+## 📦 Projects
+
+</div>
 
 - **[phronesis-framework](https://github.com/phronesis-framework/phronesis-framework)** - the core agent framework.
 - **[phronesis-web](https://github.com/phronesis-framework/phronesis-web)** - the project website.
-- **[.github](https://github.com/phronesis-framework/.github)** - shared CI/CD, conventions, and agent tooling for the org.
 
-## Design principles
+<div align="center">
 
-1. Composition over inheritance.
-2. Async-first.
-3. Strongly typed throughout (Pydantic v2, pyright strict).
-4. Immutable specifications, mutable executions.
-5. Layered with unidirectional dependencies.
-6. Observability built in (OpenTelemetry).
-7. Closed catalog of execution patterns.
-8. JSON-serializable core.
+## 🤝 Get involved
 
-## Get involved
+</div>
 
-- Read the [conventions](https://github.com/phronesis-framework/.github/tree/main/docs/conventions).
-- Open an issue or discussion in any project repository.
-- See [`CONTRIBUTING.md`](https://github.com/phronesis-framework/.github/blob/main/CONTRIBUTING.md).
+- Explore the project repositories and their documentation.
+- Open an issue in the relevant repository to report a bug or suggest an improvement.
